@@ -1,9 +1,10 @@
 # AdaFormat
 This is a frontend for the program reformat which will reformat and syntax colour Ada source code.
 The output is either text or RTF depending on what features are selected (syntax colouring => rtf).
-The command line program 'reformat' was NOT written by me and has its own documentation in the !Reformat.Docs directory.
-                                    
-# Frontend use
+
+NOTE: This is a RISC OS app.  
+                                  
+## Frontend use
  
 1. Run !AdaFormat. This will place an icon on the iconbar icon.
 2. Click SELECT on the !AdaFormat iconbar icon. This will open the setup
