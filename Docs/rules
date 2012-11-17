@@ -1,0 +1,132 @@
+$Date: 1998-01-02 11:10:54-07 $
+
+In general, the algorithm proceeds as follows:
+For each token:
+1) Check for possible decrease of scope
+2) If at beginning of line:
+   2a) Check special rules
+   2b) Indent line based on continuation line flag, scope,
+       and special rules
+3) Check for possible increase of scope
+4) Update continuation line flag
+
+********Notes regarding whitespace******
+All leading whitespace (spaces/tabs) is deleted and replaced
+by a sequence of spaces for indentation.
+
+All trailing whitespace (spaces/tabs) on non-commented lines is
+deleted.
+
+********Rules to indent: ***************
+
+IF
+SELECT -- always increases scope if not preceded by END.
+ended by END <Reserved Word>;
+
+CASE -- increase 2x (to allow for when to be indented) unless
+preceded by END.
+
+RECORD -- same as IF/SELECT, except also doesn't increase
+scope if preceded by NULL.
+
+GENERIC -- always increases scope.  Replace with first
+PACKAGE/PROCEDURE/FUNCTION not preceded by WITH-- note
+this requires decreasing scope if this is a spec; however,
+it is ok to do this in the increase scope procedure since the
+special rules will take care of this line.
+
+PROTECTED -- if not followed by FUNCTION or PROCEDURE (in which case
+it is an access type) increase scope; ended by END [id];
+
+PACKAGE
+PROCEDURE
+FUNCTION -- increases scope, but only if there is an IS preceded
+by optional arguments in () (not NEW, SEPARATE, ABSTRACT).  
+Other possibilities that
+don't increase scope:  preceded by with (inside generic),
+IS NEW, IS SEPARATE, IS ABSTRACT, ';' outside () before IS, RENAMES
+Does not increase scope inside generic-- see GENERIC above.
+
+ACCEPT -- increases scope if DO is present before ; (outside ())
+
+ENTRY -- increases scope as PROCEDURE, but not an admissible
+generic (NEW) or ABSTRACT.
+
+TASK -- increases scope, but only if there is an IS preceded by 
+optional arguments in ().  May end with ;
+
+DECLARE -- always increases scope, ends with END;
+
+BEGIN -- increases scope if not inside declare
+(switch top of stack from DECLARE to BEGIN)
+
+WHILE -- always increases scope.  Ended by END LOOP;
+
+FOR -- increase scope if LOOP appears before USE.
+
+LOOP -- increases scope if not inside WHILE/FOR (replace 
+WHILE/FOR with LOOP when encountered).
+
+EXCEPTION -- increases scope if next token is WHEN.
+
+********Rules to unindent: ***************
+
+Whenever an END is seen. (if exception or case top of stack, pop/
+unindent 2x).
+
+********Special case rules: **************
+If in one of the cases below at the START of a line, unindent
+that line only 1 level.
+
+NOTE:  Must do indentation for this line before checking for
+increase of scope, as it may change top of stack.
+
+BEGIN -- unindent this line only 1x if inside task, procedure,
+function, declare, entry, or package.
+
+PROCEDURE/FUNCTION/PACKAGE -- if this is what generic is
+(not preceded by WITH and in generic scope)
+
+EXCEPTION -- next token is WHEN
+
+PRIVATE -- previous token is not WITH, IS, ABSTRACT, LIMITED or
+TAGGED.  
+( Previous thought Next is not PROCEDURE, FUNCTION, PACKAGE or GENERIC,
+since you don't want this for private packages, e.g., but you might
+have these as the first thing in the private section)  Instead:
+inside package scope.
+
+ELSIF/ELSE -- if context is IF or SELECT
+
+THEN -- if next is ABORT
+
+WHEN -- if context is CASE/EXCEPTION
+COMMENT -- as above, plus next is WHEN
+
+OR -- if next is WHEN/ACCEPT/DELAY/TERMINATE
+
+********Continuation line rules:************
+Boolean flag:  SET for last token on line means
+next line is a continuation line.
+
+ -- CLEAR for begin, declare, do, elsif, or generic
+ -- CLEAR for semicolon if paren depth = 0
+ -- CLEAR for arrow if paren depth = 0
+ -- LEAVE ALONE for comment
+ -- FOR abort, CLEAR if previous was then, else SET
+ -- FOR or, CLEAR if next token is when/accept/terminate/delay, o/w SET
+ -- FOR else, SET if previous was or, o/w CLEAR
+ -- FOR then, SET if previous was and, o/w CLEAR
+ -- FOR private, SET if next is ; o/w CLEAR
+ -- FOR exception, CLEAR if next is when, o/w SET
+ -- FOR is, set if (NOT Need_To_Check_Is and next is not record) or
+ --    next is new, abstract or separate, o/w CLEAR
+ -- FOR loop, record, select, SET if previous is end, o/w CLEAR
+ --
+ -- SET FOR ALL OTHERS
+******Need_To_Check_Is**************
+SET for PROCEDURE/FUNCTION/PACKAGE/ENTRY/TASK if not spec
+SET for PROTECTED if next is not PROCEDURE/FUNCTION
+CLEAR for IS
+
+

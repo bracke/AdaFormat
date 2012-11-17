@@ -1,0 +1,12 @@
+Set AdaFormat$Dir <Obey$Dir>
+|
+Set AdaFormat$Help <AdaFormat$Dir>.!Help
+Set AdaFormat$Version "1.04"
+Set AdaFormat$Web "http://www.arcsite.de/hp/bracke/programming/mtools.html"
+Set AdaFormat$Title "AdaFormat"
+Set AdaFormat$Publisher "Bent Bracke"
+Set AdaFormat$Description "Reformat and syntax colour Ada source code."
+|
+Iconsprites <AdaFormat$Dir>.!Sprites
+
+

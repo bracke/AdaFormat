@@ -1,0 +1,94 @@
+# StrongEd$Mode = FrontEnd
+# This is a description of the wimp interface for AdaFormat
+
+tool_details_start
+   name          "AdaFormat";
+   command_is    "<AdaFormat$Dir>.reformat ";
+   version       "1.04 (2005-03-13)";
+   wimpslot       500k;
+   has_extended_cmdline;
+tool_details_end
+
+metaoptions_start
+   has_auto_save "RFRM_"+leafname from icn 8;
+   has_text_window;
+   display_dft_is text;
+metaoptions_end
+
+fileoutput_start
+   output_dft_is produces_output;
+fileoutput_end
+
+dbox_start
+   #icon mappings
+   icons_start
+      icn 8 maps_to string;
+
+      icn 9 maps_to "-id Upper_Case";
+      icn 11 maps_to "-id Lower_Case";
+      icn 12 maps_to "-id Mixed_No_Force_Lower";
+      icn 13 maps_to "-id Mixed_Force_Lower";
+      
+      icn 15 maps_to "-rw Upper_Case";
+      icn 17 maps_to "-rw Lower_Case";
+      icn 18 maps_to "-rw Mixed_No_Force_Lower";
+      icn 19 maps_to "-rw Mixed_Force_Lower";
+      
+      icn 20 maps_to "-c Colorize_Only";
+      icn 22 maps_to "-c Colorize";
+      icn 23 maps_to "-c Bold";
+      icn 24 maps_to "-c Bold_Only";
+      icn 25 maps_to "-c No_Colorize";
+      
+      icn 27 maps_to "-nip";
+      icn 29 maps_to "-nar";
+      icn 30 maps_to "-nrt";
+
+      icn 31 maps_to string prefix_by "-i";
+      
+      icn 32 decreases icn 31 by 1 min 1;
+      icn 33 increases icn 31 by 1;
+   icons_end
+   
+   #default icon values
+   defaults
+      icn 8 "",            
+      icn 9 off, icn 11 off, icn 12 on, icn 13 off,
+      icn 15 off, icn 17 on, icn 18 off, icn 19 off,
+      icn 20 off, icn 22 on, icn 23 off, icn 24 off, icn 25 off,
+      icn 27 off, icn 29 off,icn 30 off,
+      icn 31 "1";
+             
+   #drags to dbox (and icon bar)
+   imports_start
+      drag_to icn 8   inserts icn 8;
+      drag_to any     inserts icn 8;
+      drag_to iconbar inserts icn 8;
+   imports_end
+dbox_end
+
+# Exclusive Selection Groups (ESG)
+deselections_start
+   icn 9 deselects icn 11,icn 12,icn 13;
+   icn 11 deselects icn 9,icn 12,icn 13;
+   icn 12 deselects icn 11,icn 9,icn 13;
+   icn 13 deselects icn 11,icn 12,icn 9;
+
+   icn 15 deselects icn 17,icn 18,icn 19;
+   icn 17 deselects icn 15,icn 18,icn 19;
+   icn 18 deselects icn 17,icn 15,icn 19;
+   icn 19 deselects icn 17,icn 18,icn 15;
+
+   icn 20 deselects icn 22,icn 23,icn 24,icn 25;
+   icn 22 deselects icn 20,icn 23,icn 24,icn 25;
+   icn 23 deselects icn 22,icn 20,icn 24,icn 25;
+   icn 24 deselects icn 22,icn 23,icn 20,icn 25;
+   icn 25 deselects icn 20,icn 22,icn 23,icn 24;
+deselections_end
+   
+order_is
+  icn 9, icn 11, icn 12, icn 13,
+  icn 15, icn 17, icn 18, icn 19,
+  icn 20, icn 22, icn 23, icn 24, icn 25,
+  icn 31, icn 27, icn 29, icn 30, icn 8,
+  output;

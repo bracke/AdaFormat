@@ -1,0 +1,59 @@
+FORMAT:
+
+By: Martin C. Carlisle, Rob French and Tim Chamillard
+    United States Air Force Academy
+
+    James Hopper 
+    Science Applications International Corp.
+
+    Michael B. Feldman
+    The George Washington University
+
+
+**** Abstract ****
+  This program takes as input an Ada program, and outputs the program
+  colorized, indented and with capitalization according to commandline 
+  options.
+
+  note: any RTF capable word processor or text editor on any platform 
+  that supports color will display colorized code.
+
+  To see usage, simply run reformat with no command line options. 
+
+  FORMAT is based on the reformatter from AdaGIDE, the Ada GNAT
+  Integrated Development Environment for Win 95/NT.  For more 
+  information on AdaGIDE, see:
+ 
+  http://www.usafa.af.mil/dfcs/bios/mcc_html/adagide.html
+
+
+FORMAT is free software-- see below for more information.
+
+**** Reporting Bugs ****
+
+If you have found a possible bug in FORMAT,
+please let me know.  I'll make every effort to fix it as 
+soon as possible.  It is best if you provide a sequence 
+of steps that will enable me to recreate the error
+(and the file(s) that caused the problem).  
+
+Send comments to: carlislem@acm.org
+
+**** Building FORMAT ****
+
+Using pkunzip, simply unzip them in a directory and type (if using GNAT):
+
+gnatmake reformat 
+
+Otherwise, follow the directions for your compiler.
+
+**** Copying ****
+
+-- FORMAT is free software; you can redistribute it and/or
+-- modify it without restriction.  However, we ask that you
+-- please retain the original author information, and clearly
+-- indicate if it has been modified.
+--
+-- FORMAT is distributed in the hope that it will be useful,
+-- but WITHOUT ANY WARRANTY; without even the implied warranty
+-- of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
