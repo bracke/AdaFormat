@@ -2,7 +2,7 @@
 This is a frontend for the program reformat which will reformat and syntax colour Ada source code.
 The output is either text or RTF depending on what features are selected (syntax colouring => rtf).
 
-NOTE: This is a RISC OS app.  
+NOTE: This is a RISC OS app and will not run on other platforms.  
                                   
 ## Frontend use
  
